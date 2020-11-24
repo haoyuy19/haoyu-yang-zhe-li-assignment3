@@ -20,7 +20,8 @@
   "dependencies": {
     "config": "^3.3.2",
     "express": "^4.17.1",
-    "mongoose": "^5.10.15"
+    "mongoose": "^5.10.15",
+    "short-id": "0.1.0-1"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"
