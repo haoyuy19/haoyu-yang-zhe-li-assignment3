@@ -1,0 +1,28 @@
+{
+  "name": "haoyu-yang-zhe-li-assignment3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server",
+    "server": "nodemon server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haoyuy19/haoyu-yang-zhe-li-assignment3.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haoyuy19/haoyu-yang-zhe-li-assignment3/issues"
+  },
+  "homepage": "https://github.com/haoyuy19/haoyu-yang-zhe-li-assignment3#readme",
+  "dependencies": {
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.15"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
