@@ -9,6 +9,10 @@ app.use(express.urlencoded({ extended: false }));
 
 connectDB();
 
+var cors = require('cors');
+
+app.use(cors());
+
 //app.get('/', (req, res) => res.send('API'));
 app.use('/url', urlRouter);
 
