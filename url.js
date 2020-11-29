@@ -46,23 +46,23 @@ router.post('/', async function (req, res) {
   var short = null;
   //console.log(isURL(urlFull));
   if (!ValidURL(urlFull)) {
-    return res.status(200).send('Invalid full url');
+    return res.status(415).send('Invalid full url');
   }
   urlFull = await urlModel.findOne({ full: urlFull });
   if (urlShort != null) {
     short = await urlModel.findOne({ short: urlShort });
   }
   if (short != null) {
-    return res.status(200).send('Short url Already exist');
+    return res.status(409).send('Short url Already exist');
   } else if (urlFull != null) {
-    return res.status(200).send('Full url Already exist');
+    return res.status(409).send('Full url Already exist');
   } else {
     insertUrl(urlData);
     return res.status(200).send('added successfully');
   }
 });
 
-router.delete('/:full', async function (req, res) {
+router.delete('/:full/edit', async function (req, res) {
   const urlFull = req.params.full;
   var flag = false;
   var full = await urlModel.findOne({ full: urlFull });
@@ -93,7 +93,7 @@ router.delete('/:full', async function (req, res) {
   }
 });
 
-router.put('/:short', async function (req, res) {
+router.put('/:short/edit', async function (req, res) {
   const body = req.body;
   const short = body.short;
   var urlShort = body.short;
