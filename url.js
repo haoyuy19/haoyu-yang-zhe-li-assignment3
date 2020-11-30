@@ -24,8 +24,9 @@ router.get('/:short', async function (req, res) {
   urlShort = await urlModel.findOne({ short: urlShort });
   console.log(urlShort);
   if (urlShort == null) {
-    return res.sendStatus(404);
+    return res.sendStatus(404).send('Invalid shortened Url');
   } else {
+    // res.status(301).redirect('https://www.google.com');
     return res.status(200).send(urlShort);
   }
 });
@@ -62,19 +63,50 @@ router.post('/', async function (req, res) {
   }
 });
 
-router.delete('/:full/edit', async function (req, res) {
-  const urlFull = req.params.full;
+// router.delete('/:full/edit', async function (req, res) {
+//   const urlFull = req.params.full;
+//   var flag = false;
+//   var full = await urlModel.findOne({ full: urlFull });
+//   if (full === null) {
+//     flag = true;
+//     full = await urlModel.findOne({ short: urlFull });
+//   }
+//   if (full === null) {
+//     return res.status(404).send('Record not found');
+//   } else {
+//     if (!flag) {
+//       urlModel.findOneAndDelete({ full: urlFull }, function (err, docs) {
+//         if (err) {
+//           console.log(err);
+//         } else {
+//           return res.status(200).send('deleted successfully');
+//         }
+//       });
+//     } else {
+//       urlModel.findOneAndDelete({ short: urlFull }, function (err, docs) {
+//         if (err) {
+//           console.log(err);
+//         } else {
+//           return res.status(200).send('deleted successfully');
+//         }
+//       });
+//     }
+//   }
+// });
+
+router.delete('/:short/edit', async function (req, res) {
+  const urlShort = req.params.short;
   var flag = false;
-  var full = await urlModel.findOne({ full: urlFull });
-  if (full === null) {
+  var short = await urlModel.findOne({ short: urlShort });
+  if (short === null) {
     flag = true;
-    full = await urlModel.findOne({ short: urlFull });
+    short = await urlModel.findOne({ full: urlShort });
   }
-  if (full === null) {
-    return res.status(200).send('Record not found');
+  if (short === null) {
+    return res.status(404).send('Record not found');
   } else {
     if (!flag) {
-      urlModel.findOneAndDelete({ full: urlFull }, function (err, docs) {
+      urlModel.findOneAndDelete({ short: urlShort }, function (err, docs) {
         if (err) {
           console.log(err);
         } else {
@@ -82,7 +114,7 @@ router.delete('/:full/edit', async function (req, res) {
         }
       });
     } else {
-      urlModel.findOneAndDelete({ short: urlFull }, function (err, docs) {
+      urlModel.findOneAndDelete({ full: urlShort }, function (err, docs) {
         if (err) {
           console.log(err);
         } else {
@@ -99,15 +131,20 @@ router.put('/:short/edit', async function (req, res) {
   var urlShort = body.short;
   var urlFull = body.full;
   console.log(urlFull);
+
+  if (!ValidURL(urlFull)) {
+    return res.status(415).send('Invalid full url');
+  }
+
   urlFull = await urlModel.findOne({ full: urlFull });
 
   if (urlFull != null) {
     console.log('LLLLLL');
-    return res.status(200).send('Full url already exist');
+    return res.status(409).send('Full url already exist');
   }
   urlShort = await urlModel.findOne({ short: urlShort });
   if (urlShort == null) {
-    return res.status(200).send('Short url does not exist');
+    return res.status(409).send('Short url does not exist');
   } else {
     //await urlModel.updateOne({urlModel.short:urlShort});
     urlModel.findOneAndDelete({ short: short }, function (err, docs) {
