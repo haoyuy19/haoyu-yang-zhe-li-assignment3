@@ -3,15 +3,15 @@ const config = require('config');
 const db = config.get('mongoURI');
 
 const connectDB = async () => {
-  try {
-    await mongoose.connect(db, { useUnifiedTopology: true });
+    try {
+        await mongoose.connect(db, { useUnifiedTopology: true });
 
-    console.log('MongoDB Connected');
-  } catch (err) {
-    console.error(err.messsage);
+        console.log('MongoDB Connected');
+    } catch (err) {
+        console.error(err.messsage);
 
-    process.exit(1);
-  }
+        process.exit(1);
+    }
 };
 
 module.exports = connectDB;
