@@ -10,5 +10,5 @@ exports.urlSchema = new mongoose.Schema({
         type: String,
         required: true,
         default: shortId.generate,
-    }
-})
+    },
+});

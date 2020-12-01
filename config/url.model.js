@@ -13,4 +13,4 @@ function getAllUrl() {
 module.exports = {
     insertUrl,
     getAllUrl,
-}
+};
